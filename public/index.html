@@ -116,8 +116,7 @@
         
         function addTab() {
             const tabId = `tab${Object.keys(tabs).length + 1}`;
-            
-            tabs[tabId] = "about:blank";
+            tabs[tabId] = { url: "about:blank" };
             
             const tab = document.createElement("button");
             tab.innerText = `Tab ${Object.keys(tabs).length}`;
@@ -130,8 +129,8 @@
         
         function switchTab(tabId) {
             activeTab = tabId;
-            document.getElementById("iframeWindow").src = tabs[tabId];
-            document.getElementById("urlInput").value = tabs[tabId] === "about:blank" ? "" : tabs[tabId];
+            document.getElementById("iframeWindow").src = tabs[tabId].url;
+            document.getElementById("urlInput").value = tabs[tabId].url === "about:blank" ? "" : tabs[tabId].url;
             
             document.querySelectorAll("#tabs button").forEach(btn => btn.classList.remove("active"));
             document.getElementById(tabId).classList.add("active");
@@ -143,7 +142,7 @@
                 url = "https://" + url;
             }
             if (activeTab) {
-                tabs[activeTab] = url;
+                tabs[activeTab].url = url;
                 document.getElementById("iframeWindow").src = url;
             }
         }
