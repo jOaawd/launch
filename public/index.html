@@ -19,7 +19,9 @@
             padding: 0;
             background-color: #1e1e2e;
             color: white;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
         #tabContainer {
             display: flex;
@@ -55,13 +57,40 @@
         #tabs button:hover {
             background-color: #d6afff;
         }
-        #iframeWindow {
-            width: 100vw;
-            height: calc(100vh - 50px);
+        #controls {
+            display: flex;
+            padding: 10px;
+            background-color: #282a36;
+            position: relative;
+            z-index: 10;
+        }
+        #urlInput {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px;
             border: none;
-            position: absolute;
-            top: 50px;
-            left: 0;
+        }
+        #searchButton {
+            background-color: #50fa7b;
+            color: black;
+            border: none;
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #searchButton:hover {
+            background-color: #69ff94;
+        }
+        #iframeContainer {
+            flex-grow: 1;
+            display: flex;
+        }
+        #iframeWindow {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -70,9 +99,13 @@
         <button onclick="addTab()">New Tab</button>
         <div id="tabs"></div>
     </div>
-    <input type="text" id="urlInput" placeholder="Enter URL here">
-    <button id="searchButton">Search</button>
-    <iframe id="iframeWindow" class="iframeWindow"></iframe>
+    <div id="controls">
+        <input type="text" id="urlInput" placeholder="Enter URL here">
+        <button id="searchButton" onclick="search()">Search</button>
+    </div>
+    <div id="iframeContainer">
+        <iframe id="iframeWindow" class="iframeWindow"></iframe>
+    </div>
     
     <script>
         let tabCount = 0;
@@ -90,6 +123,14 @@
 
         function switchTab(tabId) {
             document.getElementById("iframeWindow").src = "about:blank";
+        }
+        
+        function search() {
+            let url = document.getElementById("urlInput").value;
+            if (!url.startsWith("http")) {
+                url = "https://" + url;
+            }
+            document.getElementById("iframeWindow").src = url;
         }
     </script>
     
