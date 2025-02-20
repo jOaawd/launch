@@ -43,8 +43,13 @@ document.getElementById("Discord").onclick = function (event) {
         }
     }
 
+   
+    iframeWindow.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+};
 
-    document.getElementById("Roblox").onclick = function (event) {
+  
+
+ document.getElementById("Roblox").onclick = function (event) {
         event.preventDefault();
 
         let url = document.getElementById("Roblox").value; // roblox app
@@ -58,6 +63,5 @@ document.getElementById("Discord").onclick = function (event) {
             }
         }
     
-
-    iframeWindow.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+   iframeWindow.src = __uv$config.prefix + __uv$config.encodeUrl(url);
 };
