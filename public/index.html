@@ -11,13 +11,6 @@
             });
         });
     }
-    function search() {
-        let url = document.getElementById("urlInput").value;
-        if (!url.startsWith("http")) {
-            url = "https://" + url;
-        }
-        document.getElementById("iframeWindow").src = url;
-    }
     </script>
     <style>
         body {
@@ -76,39 +69,9 @@
     </div>
     <div id="tabContent"></div>
     <input type="text" id="urlInput" placeholder="Enter URL here">
-    <button id="searchButton" onclick="search()">Search</button>
+    <button id="searchButton">Search</button>
     <iframe id="iframeWindow" class="iframeWindow"></iframe>
     
-    <script>
-        let tabCount = 0;
-        function addTab() {
-            tabCount++;
-            const tabId = `tab${tabCount}`;
-            
-            const tab = document.createElement("button");
-            tab.innerText = `Tab ${tabCount}`;
-            tab.onclick = () => switchTab(tabId);
-            document.getElementById("tabs").appendChild(tab);
-            
-            const content = document.createElement("div");
-            content.id = tabId;
-            content.className = "tabContent";
-            content.style.display = "none";
-            content.style.opacity = "0";
-            document.getElementById("tabContent").appendChild(content);
-            
-            switchTab(tabId);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll(".tabContent").forEach(tab => {
-                tab.style.display = "none";
-                tab.style.opacity = "0";
-            });
-            const activeTab = document.getElementById(tabId);
-            activeTab.style.display = "block";
-            setTimeout(() => { activeTab.style.opacity = "1"; }, 10);
-        }
-    </script>
+    <script src="example.js"></script>
 </body>
 </html>
