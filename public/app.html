@@ -69,11 +69,17 @@
             border: none;
             border-radius: 12px;
         }
+        /* Hide the search input and button */
+        #urlInput, #searchButton {
+            display: none;
+        }
     </style>
 </head>
 <body>
-     <input type="text" id="urlInput" placeholder="Enter URL here">
-        <button id="searchButton" onclick="search()">Search</button>
+    <!-- Search input and button are still present but hidden -->
+    <input type="text" id="urlInput" placeholder="Enter URL here">
+    <button id="searchButton" onclick="search()">Search</button>
+
     <div id="controls">
         <button id="Discord" onclick="Discord()">
             <img src="discord-icon.png" alt="Discord"> Discord
