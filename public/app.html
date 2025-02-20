@@ -32,7 +32,6 @@
             border: 2px solid #888;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            z-index: 2;
         }
         #Discord {
             background-color: #d0d0d0;
@@ -56,32 +55,26 @@
             height: 20px;
         }
         #iframeContainer {
-            display: none; /* Initially hidden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
-            align-items: center;
-            justify-content: center;
-            z-index: 3;
+            width: 90vw;
+            height: 80vh;
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #888;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         #iframeWindow {
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
             border: none;
             border-radius: 12px;
-            background: white;
         }
-        /* Hide the search input and button */
         #urlInput, #searchButton {
             display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Search input and button are still present but hidden -->
     <input type="text" id="urlInput" placeholder="Enter URL here">
     <button id="searchButton" onclick="search()">Search</button>
 
@@ -90,34 +83,25 @@
             <img src="discord-icon.png" alt="Discord"> Discord
         </button>
     </div> 
-
-    <div id="iframeContainer" onclick="closeIframe()">
+    <div id="iframeContainer">
         <iframe id="iframeWindow"></iframe>
     </div>
     
     <script>
-        function showIframe(url) {
-            document.getElementById("iframeWindow").src = url;
-            document.getElementById("iframeContainer").style.display = "flex"; // Show in fullscreen
-            document.getElementById("controls").style.display = "none"; // Hide buttons
-        }
-
-        function closeIframe() {
-            document.getElementById("iframeContainer").style.display = "none"; // Hide iframe
-            document.getElementById("controls").style.display = "flex"; // Show buttons again
-        }
-
         function search() {
             let url = document.getElementById("urlInput").value;
             if (!url.startsWith("http")) {
                 url = "https://" + url;
             }
-            showIframe(url);
+            document.getElementById("iframeWindow").src = url;
         }
 
         function Discord() {
-            let url = "https://discord.com"; // Hardcoded Discord link
-            showIframe(url);
+            let url = document.getElementById("Discord").value;
+            if (!url.startsWith("http")) {
+                url = "https://" + url;
+            }
+            document.getElementById("iframeWindow").src = url;
         }
     </script>
     
