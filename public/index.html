@@ -1,26 +1,127 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="/uv/uv.bundle.js"></script>
-        <script src="/uv/uv.config.js"></script>
-
-        <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/uv/sw.js", {
-                    scope: __uv$config.prefix,
-                });
+<head>
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
+    <script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/uv/sw.js", {
+                scope: __uv$config.prefix,
             });
+        });
+    }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e2e;
+            color: white;
         }
-        </script>
+        #tabContainer {
+            display: flex;
+            align-items: center;
+            background-color: #282a36;
+            padding: 10px;
+        }
+        #tabContainer button {
+            background-color: #ff79c6;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #tabContainer button:hover {
+            background-color: #ff92d0;
+        }
+        #tabs button {
+            background-color: #bd93f9;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #tabs button:hover {
+            background-color: #d6afff;
+        }
+        .tabContent {
+            padding: 20px;
+            background: #44475a;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s ease-in-out;
+        }
+        .iframeWindow {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="tabContainer">
+        <button onclick="addTab()">New Tab</button>
+        <div id="tabs"></div>
+    </div>
+    <div id="tabContent"></div>
+    
+    <script>
+        let tabCount = 0;
+        function addTab() {
+            tabCount++;
+            const tabId = `tab${tabCount}`;
+            
+            const tab = document.createElement("button");
+            tab.innerText = `Tab ${tabCount}`;
+            tab.onclick = () => switchTab(tabId);
+            document.getElementById("tabs").appendChild(tab);
+            
+            const content = document.createElement("div");
+            content.id = tabId;
+            content.className = "tabContent";
+            content.style.display = "none";
+            content.style.opacity = "0";
+            content.innerHTML = `
+                <input type="text" placeholder="Enter URL" onkeypress="loadURL(event, '${tabId}')">
+                <iframe class="iframeWindow"></iframe>
+            `;
+            document.getElementById("tabContent").appendChild(content);
+            
+            switchTab(tabId);
+        }
 
-        <link rel="stylesheet" href="example.css">
-    </head>
-    <body>
-        <input type="text" id="urlInput" placeholder="Enter URL here">
-        <button id="searchButton">Search Text</button>
+        function switchTab(tabId) {
+            document.querySelectorAll(".tabContent").forEach(tab => {
+                tab.style.display = "none";
+                tab.style.opacity = "0";
+            });
+            const activeTab = document.getElementById(tabId);
+            activeTab.style.display = "block";
+            setTimeout(() => { activeTab.style.opacity = "1"; }, 10);
+        }
 
-        <iframe id="iframeWindow" class="iframeWindow"></iframe>
-    </body>
-    <script src="example.js"></script>
+        function loadURL(event, tabId) {
+            if (event.key === "Enter") {
+                const url = event.target.value;
+                document.querySelector(`#${tabId} iframe`).style.transform = "scale(0.9)";
+                setTimeout(() => {
+                    document.querySelector(`#${tabId} iframe`).src = url;
+                    document.querySelector(`#${tabId} iframe`).style.transform = "scale(1)";
+                }, 200);
+            }
+        }
+    </script>
+</body>
 </html>
