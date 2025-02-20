@@ -39,13 +39,12 @@ app.get('/index', (req, res) => {
     res.sendFile(path.join(process.cwd(), '/public/index.html'));
 });
 
-/* add your own extra urls like this:
 
-app.get('/pathOnYourSite', (req, res) => {
-    res.sendFile(path.join(process.cwd(), '/linkToItInYourSource'));
+app.get('/app', (req, res) => {
+    res.sendFile(path.join(process.cwd(), '/public/app.html'));
 });
 
-*/
+
 
 const PORT = 3000;
 server.on('listening', () => {
