@@ -36,6 +36,13 @@ document.getElementById("Discord").onclick = function (event) {
 
     
 
+    if (!url.includes(".")) {
+        url = searchUrl + encodeURIComponent(url);
+    } else {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) { // if no http or https is detected, add https automatically
+            url = "https://" + url;
+        }
+    }
     
 
     iframeWindow.src = __uv$config.prefix + __uv$config.encodeUrl(url);
