@@ -11,6 +11,13 @@
             });
         });
     }
+    function search() {
+        let url = document.getElementById("urlInput").value;
+        if (!url.startsWith("http")) {
+            url = "https://" + url;
+        }
+        document.getElementById("iframeWindow").src = url;
+    }
     </script>
     <style>
         body {
@@ -68,6 +75,9 @@
         <div id="tabs"></div>
     </div>
     <div id="tabContent"></div>
+    <input type="text" id="urlInput" placeholder="Enter URL here">
+    <button id="searchButton" onclick="search()">Search</button>
+    <iframe id="iframeWindow" class="iframeWindow"></iframe>
     
     <script>
         let tabCount = 0;
@@ -85,11 +95,6 @@
             content.className = "tabContent";
             content.style.display = "none";
             content.style.opacity = "0";
-            content.innerHTML = `
-                <input type="text" id="urlInput${tabId}" placeholder="Enter URL here">
-                <button onclick="loadURL('${tabId}')">Search</button>
-                <button id="searchButton">Search Text</button>
-            `;
             document.getElementById("tabContent").appendChild(content);
             
             switchTab(tabId);
