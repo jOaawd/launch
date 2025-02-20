@@ -43,7 +43,20 @@ document.getElementById("Discord").onclick = function (event) {
         }
     }
 
-   
+
+    document.getElementById("Roblox").onclick = function (event) {
+        event.preventDefault();
+
+        let url = document.getElementById("Roblox").value; // roblox app
+        let searchUrl = "https://roblox.com/";
+
+
+        if (!url.includes(".")) {
+            url = searchUrl + encodeURIComponet(url);
+         } else {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) { //roblox app
+            }
+        }
     
 
     iframeWindow.src = __uv$config.prefix + __uv$config.encodeUrl(url);
