@@ -31,10 +31,17 @@ document.getElementById("searchButton").onclick = function (event) {
 document.getElementById("Discord").onclick = function (event) {
     event.preventDefault();
 
-    let url = document.getElementById("Discord").value; // if no periods are detected in the input, search google instead
+    let url = document.getElementById("Discord").value; // Discord app
     let searchUrl = "https://discord.com/";
 
     
+ if (!url.includes(".")) {
+        url = searchUrl + encodeURIComponent(url);
+    } else {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) { // Discord app
+            url = "https://" + url;
+        }
+    }
 
    
     
