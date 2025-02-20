@@ -66,7 +66,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1;
+            z-index: 3;
         }
         #iframeWindow {
             width: 90%;
@@ -78,6 +78,10 @@
         /* Hide the search input and button */
         #urlInput, #searchButton {
             display: none;
+        }
+        /* Hide controls when iframe is shown */
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -92,7 +96,7 @@
         </button>
     </div> 
 
-    <div id="iframeContainer">
+    <div id="iframeContainer" onclick="closeIframe()">
         <iframe id="iframeWindow"></iframe>
     </div>
     
@@ -100,6 +104,12 @@
         function showIframe(url) {
             document.getElementById("iframeWindow").src = url;
             document.getElementById("iframeContainer").style.display = "flex"; // Show in fullscreen
+            document.getElementById("controls").classList.add("hidden"); // Hide buttons
+        }
+
+        function closeIframe() {
+            document.getElementById("iframeContainer").style.display = "none"; // Hide iframe
+            document.getElementById("controls").classList.remove("hidden"); // Show buttons again
         }
 
         function search() {
