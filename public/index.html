@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>test</title>
+    <title>d</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-     <script src="/uv/uv.bundle.js"></script>
-    <script src="/uv/uv.config.js"></script>
-    <script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/uv/sw.js", {
-                scope: __uv$config.prefix,
-            });
-        });
-    }
-    </script>
     <style>
-    
         body, html { height: 100%; margin: 0; display: flex; flex-direction: column; font-family: Arial, sans-serif; background-color: #1a202c; color: white; }
         .hidden { display: none; }
         .toolbar { display: flex; align-items: center; padding: 10px; background: #2d3748; border-bottom: 2px solid #38a169; }
@@ -27,8 +15,6 @@
         .newtab img { width: 100px; margin-bottom: 10px; }
         .newtab input { width: 50%; padding: 10px; font-size: 18px; border: 1px solid #38a169; border-radius: 5px; background: #2d3748; color: white; text-align: center; }
         .newtab button { margin-top: 10px; padding: 10px 20px; font-size: 16px; border: none; background: #38a169; color: white; border-radius: 5px; cursor: pointer; }
-        #iframeContainer { flex-grow: 1; width: 100%; }
-        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -40,12 +26,9 @@
         <button id="searchButton" onclick="search()">🔍</button>
     </div>
     <div class="newtab" id="newTabContainer">
-        <img src="https://raw.githubusercontent.com/jOaawd/picklebox/f59e3194e773ad306b268f612470cecc5e3b547c/static/img/pickle.svg" alt="Logo">
+        <img src="/img/pickle.svg" alt="Logo">
         <input id="newTabInput" type="text" placeholder="Search or enter address">
         <button onclick="searchFromNewTab()">Search</button>
-    </div>
-    <div id="iframeContainer" class="hidden">
-        <iframe id="iframeWindow"></iframe>
     </div>
     <script>
         function search() {
@@ -55,25 +38,28 @@
             } else if (!url.startsWith("http")) {
                 url = "https://" + url;
             }
-            loadPage(url);
+            window.location.href = url;
         }
         function searchFromNewTab() {
             let url = document.getElementById("newTabInput").value;
             document.getElementById("urlInput").value = url;
             search();
         }
-        function loadPage(url) {
-            document.getElementById("newTabContainer").classList.add("hidden");
-            document.getElementById("iframeContainer").classList.remove("hidden");
-            document.getElementById("iframeWindow").src = url;
-        }
         function reloadPage() {
-            let iframe = document.getElementById("iframeWindow");
-            if (iframe) iframe.src = iframe.src;
+            location.reload();
         }
     </script>
     <script src="/uv/uv.bundle.js"></script>
     <script src="/uv/uv.config.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/uv/sw.js", {
+                    scope: __uv$config.prefix,
+                });
+            });
+        }
+    </script>
     <script src="example.js"></script>
 </body>
 </html>
