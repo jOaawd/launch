@@ -57,12 +57,10 @@
                 }
             }
 
-            // Hide UI, show iframe
             document.getElementById("toolbar").style.display = "none";
             document.getElementById("newTabContainer").style.display = "none";
             document.getElementById("iframeContainer").style.display = "block";
 
-            // Load URL with UV encoding
             if (typeof __uv$config !== "undefined") {
                 document.getElementById("iframeWindow").src = __uv$config.prefix + __uv$config.encodeUrl(url);
             } else {
