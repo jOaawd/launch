@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browses</title>
+    <title>AI Browser</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <style>
         body, html { height: 100%; margin: 0; display: flex; flex-direction: column; font-family: Arial, sans-serif; background-color: #1a202c; color: white; }
         .hidden { display: none; }
-        .toolbar { display: flex; align-items: center; padding: 10px; background: #2d3748; border-bottom: 2px solid #38a169; }
+        .toolbar { display: flex; align-items: center; padding: 10px; background: #2d3748; border-bottom: 2px solid #38a169; transition: opacity 0.3s ease; }
         .toolbar button { margin: 0 5px; background: none; border: none; font-size: 18px; cursor: pointer; color: #38a169; }
         .toolbar input { flex: 1; padding: 5px; font-size: 16px; border: 1px solid #38a169; border-radius: 5px; background: #2d3748; color: white; }
         .newtab { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-    <div class="toolbar">
+    <div class="toolbar" id="toolbar">
         <button onclick="history.back()">⬅</button>
         <button onclick="history.forward()">➡</button>
         <button onclick="reloadPage()">⟳</button>
@@ -56,10 +56,18 @@
                     url = "https://" + url;
                 }
             }
-            
+
+            // Hide UI, show iframe
+            document.getElementById("toolbar").style.display = "none";
             document.getElementById("newTabContainer").style.display = "none";
             document.getElementById("iframeContainer").style.display = "block";
-            document.getElementById("iframeWindow").src = __uv$config.prefix + __uv$config.encodeUrl(url);
+
+            // Load URL with UV encoding
+            if (typeof __uv$config !== "undefined") {
+                document.getElementById("iframeWindow").src = __uv$config.prefix + __uv$config.encodeUrl(url);
+            } else {
+                console.error("UV config not loaded yet.");
+            }
         };
 
         function searchFromNewTab() {
